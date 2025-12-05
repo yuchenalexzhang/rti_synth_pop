@@ -4,7 +4,7 @@
 # nkruskamp@rti.org , ckery@rti.org, jrin@rti.org
 
 import pandas as pd
-from pyprojroot import here
+#from pyprojroot import here    #Yuchen Z commented out 11/25/25,  not be able to set up path root in snowflake. 
 
 # FOR THE USER: Currently you can configure the year and states you would like to run
 # the synthetic population here. There are two requirements demonstrated below:
@@ -15,16 +15,18 @@ from pyprojroot import here
 #       of those data.
 
 
-STATE_INFO = [("WY", "56")]
+STATE_INFO = [("DE", "10")] # originally WY, changed it to Delaware
 YEAR = 2019
 SURVEY = "acs5"
 # ======================================================================================
 
 vars_list = ["size", "age", "income", "race", "ethnicity"]
-data_dir = here() / "data"
-raw_data_dir = data_dir / "raw"
-interim_data_dir = data_dir / "interim"
-processed_data_dir = data_dir / "processed"
+#Yuchen Z commented below lines 11/25/25,  becasue of not being able to use pyprojroot here,  
+#need to define the directory to dataset manually:
+data_dir = '/home/app/data/'     #Yuchen 12/4: home/app/ is the root dir that host both notebook and environment yml file.
+raw_data_dir = data_dir + "raw"
+interim_data_dir = data_dir + "interim"
+processed_data_dir = data_dir + "processed"
 
 pums_h_col_dict = {
     "size": "NP",
