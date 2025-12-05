@@ -10,14 +10,15 @@ from typing import Annotated
 from zipfile import ZipFile
 
 from pyarrow import parquet
-import osgeo  # noqa
+#import osgeo  # noqa    #not able to be installed (pip install doesn't work)
 import censusdata
 import pandas as pd
 from pytask import Product, mark, task
 from rasterio.merge import merge as rio_merge
 from tqdm import tqdm
 
-from rti_synth_pop.config import CENSUS_COLS, STATE_INFO, SURVEY, YEAR, raw_data_dir
+#Yuchen:  we don't have config as separate .py file, no need to run this line. 
+#from rti_synth_pop.config import CENSUS_COLS, STATE_INFO, SURVEY, YEAR, raw_data_dir
 
 
 # %%
@@ -26,7 +27,7 @@ def _create_parametrization(state_info: list[str]) -> dict[str, str | Path]:
     for st_abbr, st_fips in state_info:
         id_to_kwargs[st_abbr] = {
             "st_fips": st_fips,
-            "output_path": raw_data_dir / f"{st_fips}_{SURVEY}_{YEAR}.parquet",
+            "output_path": raw_data_dir + f"{st_fips}_{SURVEY}_{YEAR}.parquet",
         }
 
     return id_to_kwargs
@@ -82,7 +83,7 @@ def test_download_state_fips(
     url: str = (
         "https://www2.census.gov/geo/docs/reference/codes2020/national_state2020.txt"
     ),
-    output_path: Annotated[Path, Product] = raw_data_dir / "national_state2020.parquet",
+    output_path: Annotated[Path, Product] = raw_data_dir + "national_state2020.parquet",
 ) -> None:
     """
     This downloads a table of the full list of state codes and fips if we wanted to run
@@ -101,9 +102,9 @@ def test_download_state_fips(
 @mark.persist
 @task(id="merge_landscan")
 def task_merge_landscan(
-    input_path: str = raw_data_dir / f"landscan-usa-{YEAR}-night-assets.zip",
+    input_path: str = raw_data_dir + f"landscan-usa-{YEAR}-night-assets.zip",
     output_path: Annotated[Path, Product] = raw_data_dir
-    / f"landscan-usa-{YEAR}-merged-night.tif",
+    + f"landscan-usa-{YEAR}-merged-night.tif",
 ) -> None:
     """extract landscan population rasters and merge them together
 
@@ -128,7 +129,7 @@ def task_merge_landscan(
             for file in file_list:
                 z2.extract(file, raw_data_dir)
 
-    file_path_list = [raw_data_dir / file for file in file_list]
+    file_path_list = [raw_data_dir + file for file in file_list]
 
     _ = rio_merge(file_path_list, dst_path=output_path)
 
