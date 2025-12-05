@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import euclidean_distances
 
-from rti_synth_pop.config import label_dict
+#from rti_synth_pop.config import label_dict  #Yuchen:  Created label_dict object in previous cell, no need to reference the config.py file.
 
 
 # %%
