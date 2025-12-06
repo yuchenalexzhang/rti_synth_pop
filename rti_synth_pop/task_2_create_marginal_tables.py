@@ -10,17 +10,18 @@ from pathlib import Path
 from typing import Annotated
 
 import duckdb
-from pyprojroot import here
+#from pyprojroot import here  # Yuchen commented out. 
 from pytask import Product, mark, task
 
-from rti_synth_pop.config import (
-    STATE_INFO,
-    SURVEY,
-    YEAR,
-    interim_data_dir,
-    query_dict,
-    raw_data_dir,
-)
+#yuchen commented out,  have these as variables already, don't need to import.
+# from rti_synth_pop.config import (
+#     STATE_INFO,
+#     SURVEY,
+#     YEAR,
+#     interim_data_dir,
+#     query_dict,
+#     raw_data_dir,
+# )
 
 
 # %%
@@ -31,10 +32,10 @@ def _create_parametrization(
     for st_abbr, st_fips in state_info:
         for var, query in query_dict.items():
             id_to_kwargs[st_abbr + "_" + var] = {
-                "input_path": raw_data_dir / f"{st_fips}_{SURVEY}_{YEAR}.parquet",
+                "input_path": raw_data_dir + f"{st_fips}_{SURVEY}_{YEAR}.parquet",
                 "query": query,
                 "output_path": interim_data_dir
-                / f"{st_fips}_{SURVEY}_{YEAR}_{var}.parquet",
+                + f"{st_fips}_{SURVEY}_{YEAR}_{var}.parquet",
             }
 
     return id_to_kwargs
