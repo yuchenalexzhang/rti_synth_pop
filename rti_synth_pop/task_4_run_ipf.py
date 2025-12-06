@@ -18,7 +18,7 @@ from pandas import CategoricalDtype
 from pytask import Product, mark, task
 from tqdm import tqdm
 
-from rti_synth_pop.config import STATE_INFO, SURVEY, YEAR, interim_data_dir, query_dict
+#from rti_synth_pop.config import STATE_INFO, SURVEY, YEAR, interim_data_dir, query_dict  #Yuchen commented out.
 
 
 # %%
@@ -31,12 +31,12 @@ def _create_parametrization(
         input_var_paths = {}
         for var in var_dict.keys():
             input_var_paths[var] = (
-                interim_data_dir / f"{st_fips}_{SURVEY}_{YEAR}_{var}.parquet"
+                interim_data_dir + f"{st_fips}_{SURVEY}_{YEAR}_{var}.parquet"
             )
         id_to_kwargs[st_abbr] = {
             "input_variables": input_var_paths,
             "output_path": interim_data_dir
-            / f"{st_fips}_{SURVEY}_{YEAR}_IPF_counts.parquet",
+            + f"{st_fips}_{SURVEY}_{YEAR}_IPF_counts.parquet",
         }
 
     return id_to_kwargs
