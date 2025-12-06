@@ -12,7 +12,7 @@ import geopandas as gpd
 import pandas as pd
 from pytask import Product, mark, task
 
-from rti_synth_pop.config import STATE_INFO, YEAR, interim_data_dir, raw_data_dir
+#from rti_synth_pop.config import STATE_INFO, YEAR, interim_data_dir, raw_data_dir  # Yuchen commented out.
 
 
 # %%
@@ -20,10 +20,10 @@ def _create_parametrization(state_info: list[str]) -> dict[str, str | Path]:
     id_to_kwargs = {}
     for st_abbr, st_fips in state_info:
         id_to_kwargs[st_abbr + "_pums_bg_crosswalk"] = {
-            "input_pums_path": raw_data_dir / f"tl_{YEAR}_{st_fips}_puma10.zip",
-            "input_bg_path": raw_data_dir / f"tl_{YEAR}_{st_fips}_bg.zip",
+            "input_pums_path": raw_data_dir + f"tl_{YEAR}_{st_fips}_puma10.zip",
+            "input_bg_path": raw_data_dir + f"tl_{YEAR}_{st_fips}_bg.zip",
             "output_path": interim_data_dir
-            / f"{st_fips}_{YEAR}_pums_2_bg_crosswalk.parquet",
+            + f"{st_fips}_{YEAR}_pums_2_bg_crosswalk.parquet",
         }
     return id_to_kwargs
 
