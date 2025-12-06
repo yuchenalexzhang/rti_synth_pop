@@ -18,18 +18,18 @@ from pandas.api.types import CategoricalDtype
 from pytask import Product, mark, task
 from tqdm import tqdm
 
-from rti_synth_pop.config import (
-    STATE_INFO,
-    SURVEY,
-    YEAR,
-    age_labels,
-    income_labels,
-    interim_data_dir,
-    raw_data_dir,
-    size_labels,
-    vars_list,
-)
-from rti_synth_pop.sample_pums import get_similarity_df, sample_pums_data
+# from rti_synth_pop.config import (   #Yuchen commented out, not needed.
+#     STATE_INFO,
+#     SURVEY,
+#     YEAR,
+#     age_labels,
+#     income_labels,
+#     interim_data_dir,
+#     raw_data_dir,
+#     size_labels,
+#     vars_list,
+# )
+# from rti_synth_pop.sample_pums import get_similarity_df, sample_pums_data
 
 parallel = Parallel(n_jobs=100, require="sharedmem", prefer="threads")
 
@@ -68,14 +68,14 @@ def _create_parametrization(state_info: list[str]) -> dict[str, str | Path]:
     for st_abbr, st_fips in state_info:
         id_to_kwargs[st_abbr] = {
             "ipf_path": interim_data_dir
-            / f"{st_fips}_{SURVEY}_{YEAR}_IPF_counts.parquet",
-            "pums_h_path": interim_data_dir / f"csv_h{st_fips}_{YEAR}_recoded.parquet",
+            + f"{st_fips}_{SURVEY}_{YEAR}_IPF_counts.parquet",
+            "pums_h_path": interim_data_dir + f"csv_h{st_fips}_{YEAR}_recoded.parquet",
             "crosswalk_path": interim_data_dir
-            / f"{st_fips}_{YEAR}_pums_2_bg_crosswalk.parquet",
+            + f"{st_fips}_{YEAR}_pums_2_bg_crosswalk.parquet",
             # "raw_pums_path": raw_data_dir / f"csv_h{st_abbr.lower()}_{YEAR}.zip",
             "output_path": interim_data_dir
-            / f"{st_fips}_{YEAR}_household_synthpop_serialnos.parquet",
-            "census_path": raw_data_dir / f"{st_fips}_{SURVEY}_{YEAR}.parquet",
+            + f"{st_fips}_{YEAR}_household_synthpop_serialnos.parquet",
+            "census_path": raw_data_dir + f"{st_fips}_{SURVEY}_{YEAR}.parquet",
         }
 
     return id_to_kwargs
