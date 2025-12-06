@@ -24,9 +24,9 @@ vars_list = ["size", "age", "income", "race", "ethnicity"]
 #Yuchen Z commented below lines 11/25/25,  becasue of not being able to use pyprojroot here,  
 #need to define the directory to dataset manually:
 data_dir = '/home/app/data/'     #Yuchen 12/4: home/app/ is the root dir that host both notebook and environment yml file.
-raw_data_dir = data_dir + "raw"
-interim_data_dir = data_dir + "interim"
-processed_data_dir = data_dir + "processed"
+raw_data_dir = data_dir + "raw/"
+interim_data_dir = data_dir + "interim/"
+processed_data_dir = data_dir + "processed/"
 
 pums_h_col_dict = {
     "size": "NP",
