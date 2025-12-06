@@ -12,17 +12,17 @@ from zipfile import ZipFile
 import pandas as pd
 from pytask import Product, mark, task
 
-from rti_synth_pop.config import (
-    STATE_INFO,
-    YEAR,
-    age_map,
-    ethnicity_map,
-    income_map,
-    interim_data_dir,
-    pums_col_list,
-    race_map,
-    raw_data_dir,
-)
+# from rti_synth_pop.config import (   #Yuchen commented out.  not needed
+#     STATE_INFO,
+#     YEAR,
+#     age_map,
+#     ethnicity_map,
+#     income_map,
+#     interim_data_dir,
+#     pums_col_list,
+#     race_map,
+#     raw_data_dir,
+# )
 
 # TODO: turn this into a task
 # fold all this information into the larger dictionary in the config file.
@@ -40,9 +40,9 @@ def _create_parametrization(state_info: list[str]) -> dict[str, str | Path]:
     id_to_kwargs = {}
     for st_abbr, st_fips in state_info:
         id_to_kwargs[st_abbr] = {
-            "input_path": raw_data_dir / f"csv_h{st_abbr.lower()}_{YEAR}.zip",
-            "input_persons_path": raw_data_dir / f"csv_p{st_abbr.lower()}_{YEAR}.zip",
-            "output_path": interim_data_dir / f"csv_h{st_fips}_{YEAR}_recoded.parquet",
+            "input_path": raw_data_dir + f"csv_h{st_abbr.lower()}_{YEAR}.zip",
+            "input_persons_path": raw_data_dir + f"csv_p{st_abbr.lower()}_{YEAR}.zip",
+            "output_path": interim_data_dir + f"csv_h{st_fips}_{YEAR}_recoded.parquet",
         }
 
     return id_to_kwargs
