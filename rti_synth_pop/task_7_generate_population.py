@@ -15,15 +15,15 @@ from zipfile import ZipFile
 import pandas as pd
 from pytask import Product, mark, task
 
-from rti_synth_pop.config import (
-    STATE_INFO,
-    YEAR,
-    category_maps,
-    interim_data_dir,
-    processed_data_dir,
-    raw_data_dir,
-    rename_synpop_h,
-)
+# from rti_synth_pop.config import (  #Yuchen commented out, not needed
+#     STATE_INFO,
+#     YEAR,
+#     category_maps,
+#     interim_data_dir,
+#     processed_data_dir,
+#     raw_data_dir,
+#     rename_synpop_h,
+# )
 
 # %%
 
@@ -45,13 +45,13 @@ def _create_parametrization(state_info: list[str]) -> dict[str, str | Path]:
     id_to_kwargs = {}
     for st_abbr, st_fips in state_info:
         id_to_kwargs[st_abbr] = {
-            "pums_h_path": interim_data_dir / f"csv_h{st_fips}_{YEAR}_recoded.parquet",
-            "pums_p_path": raw_data_dir / f"csv_p{st_abbr.lower()}_{YEAR}.zip",
+            "pums_h_path": interim_data_dir + f"csv_h{st_fips}_{YEAR}_recoded.parquet",
+            "pums_p_path": raw_data_dir + f"csv_p{st_abbr.lower()}_{YEAR}.zip",
             "sampled_serialno_path": interim_data_dir
-            / f"{st_fips}_{YEAR}_household_synthpop_serialnos.parquet",
-            "output_path": interim_data_dir / f"{st_fips}_{YEAR}_households.parquet",
+            + f"{st_fips}_{YEAR}_household_synthpop_serialnos.parquet",
+            "output_path": interim_data_dir + f"{st_fips}_{YEAR}_households.parquet",
             "output_path_persons": processed_data_dir
-            / f"{st_fips}_{YEAR}_persons.parquet",
+            + f"{st_fips}_{YEAR}_persons.parquet",
         }
 
     return id_to_kwargs
